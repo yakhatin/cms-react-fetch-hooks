@@ -1,4 +1,5 @@
 export const fetchDataContextStorageDefaultValues = {
+    createAdditionalState: () => {},
     catalogs: {
         data: [],
         loading: true,
