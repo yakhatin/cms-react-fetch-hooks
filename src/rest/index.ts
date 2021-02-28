@@ -5,7 +5,7 @@ interface FetchDataResponse<T> {
     totalCount?: number | null;
 }
 
-type ReceivedMethodType = 'GET' | 'POST' | 'PUT'| 'DELETE';
+export type ReceivedMethodType = 'GET' | 'POST' | 'PUT'| 'DELETE';
 type ReceivedDataType = string | number | Record<string, any> | FormData;
 
 /**
