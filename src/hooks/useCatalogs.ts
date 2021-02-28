@@ -1,12 +1,22 @@
 import { CatalogInterface } from '../types/catalog';
-import defaultHook from './defaultHook';
+import useFetch from './useFetch';
+import { useFetchContext } from './useFetchContext';
 
-export const useCatalogs = (body?: any) => defaultHook<CatalogInterface[]>({
+export const useCatalogs = (body?: any) => useFetch<CatalogInterface[]>({
+    defaultValue: [],
+    rest: {
+        name: 'catalogs/list',
+        method: 'POST',
+        body
+    }
+});
+
+export const useCatalogsWithContext = (body?: any) => useFetchContext<CatalogInterface[]>({
     defaultValue: [],
     rest: {
         name: 'catalogs/list',
         method: 'POST',
         body
     },
-    dataKey: 'catalogs'
+    key: 'catalogs'
 });

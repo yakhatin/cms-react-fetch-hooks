@@ -51,23 +51,25 @@ const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<any>): R
 
     const contextValue: FetchDataContextStorageInterface = {
         createAdditionalState,
-        catalogs: {
-            data: catalogs,
-            loading: catalogsLoading,
-            setters: {
-                setData: setCatalogs,
-                setLoading: setCatalogsLoading,
+        state: {
+            catalogs: {
+                data: catalogs,
+                loading: catalogsLoading,
+                setters: {
+                    setData: setCatalogs,
+                    setLoading: setCatalogsLoading,
+                },
             },
-        },
-        appConfig: {
-            data: appConfig,
-            loading: appConfigLoading,
-            setters: {
-                setData: setAppConfig,
-                setLoading: setAppConfigLoading,
+            appConfig: {
+                data: appConfig,
+                loading: appConfigLoading,
+                setters: {
+                    setData: setAppConfig,
+                    setLoading: setAppConfigLoading,
+                },
             },
-        },
-        ...additionalState
+            ...additionalState
+        }
     };
 
     return (

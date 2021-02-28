@@ -1,17 +1,8 @@
 import { useEffect, useState } from "react";
-import { ReceivedMethodType, fetchData } from "../rest";
+import { fetchData } from "../rest";
+import { UseFetchInterface, UseFetchParams } from "../types/use-fetch";
 
-interface DefaultHookParams<T> {
-  defaultValue: T;
-  rest: {
-    name: string;
-    method: ReceivedMethodType;
-    body?: Record<string, any>;
-  };
-  dataKey?: string;
-}
-
-const defaultHook = <T = any>(params: DefaultHookParams<T>) => {
+const defaultHook = <T = any>(params: UseFetchParams<T>): UseFetchInterface<T> => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T>(params.defaultValue);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -21,7 +12,7 @@ const defaultHook = <T = any>(params: DefaultHookParams<T>) => {
 
     const result = await fetchData<T>(
       params.rest.name,
-      "POST",
+      params.rest.method,
       params.rest.body
     );
 
@@ -39,7 +30,7 @@ const defaultHook = <T = any>(params: DefaultHookParams<T>) => {
   }, [params.rest.body]);
 
   return {
-    [params.dataKey || "data"]: data,
+    data,
     error: errorMessage,
     loading,
   };
