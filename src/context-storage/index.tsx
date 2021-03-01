@@ -8,7 +8,7 @@ import { AdditionalStateInterface, FetchDataContextStorageInterface } from './ty
 
 export const FetchDataContextStorage = React.createContext<FetchDataContextStorageInterface>(fetchDataContextStorageDefaultValues);
 
-const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<any>): React.ReactElement => {
+export const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<any>): React.ReactElement => {
     const [catalogs, setCatalogs] = useState<CatalogInterface[]>([]);
     const [catalogsLoading, setCatalogsLoading] = useState(true);
     const [appConfig, setAppConfig] = useState<AppConfigInterface | undefined>();
@@ -80,5 +80,3 @@ const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<any>): R
         </FetchDataContextStorage.Provider>
     );
 };
-
-export default FetchDataContextStorageWrapper;
