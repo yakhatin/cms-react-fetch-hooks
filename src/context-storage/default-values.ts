@@ -1,21 +1,29 @@
-export const fetchDataContextStorageDefaultValues = {
+import { FetchDataContextStorageInterface } from './types';
+
+const defaultFunction = () => {};
+
+export const fetchDataContextStorageDefaultValues: FetchDataContextStorageInterface = {
     createAdditionalState: () => {},
     state: {
         catalogs: {
             data: [],
-            loading: true,
+            fetched: false,
+            loading: false,
             setters: {
-                setData: () => {},
-                setLoading: () => {},
+                setData: defaultFunction,
+                setFetched: defaultFunction,
+                setLoading: defaultFunction,
             },
         },
         appConfig: {
             data: undefined,
-            loading: true,
+            fetched: false,
+            loading: false,
             setters: {
-                setData: () => {},
-                setLoading: () => {},
+                setData: defaultFunction,
+                setFetched: defaultFunction,
+                setLoading: defaultFunction,
             },
         },
-    }
+    },
 };

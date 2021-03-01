@@ -7,8 +7,8 @@ export const useCatalogs = (body?: any) => useFetch<CatalogInterface[]>({
     rest: {
         name: 'catalogs/list',
         method: 'POST',
-        body
-    }
+        body,
+    },
 });
 
 export const useCatalogsWithContext = (body?: any) => useFetchContext<CatalogInterface[]>({
@@ -16,7 +16,7 @@ export const useCatalogsWithContext = (body?: any) => useFetchContext<CatalogInt
     rest: {
         name: 'catalogs/list',
         method: 'POST',
-        body
+        body,
     },
-    key: 'catalogs'
+    key: 'catalogs',
 });

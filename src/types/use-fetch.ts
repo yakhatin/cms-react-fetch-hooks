@@ -1,4 +1,4 @@
-import { ReceivedMethodType } from "../rest";
+import { ReceivedMethodType } from '../rest';
 
 export interface UseFetchParams<T> {
   defaultValue: T;
@@ -17,4 +17,5 @@ export interface UseFetchInterface<T> {
     data: T;
     error: string | null;
     loading: boolean;
+    refresh: () => void;
 }

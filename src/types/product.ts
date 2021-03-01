@@ -1,4 +1,4 @@
-import { ImageInterface } from "./image";
+import { ImageInterface } from './image';
 
 export interface ProductCharacteristicInterface {
     title: string;
