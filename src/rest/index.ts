@@ -9,6 +9,11 @@ export type ReceivedMethodType = 'GET' | 'POST' | 'PUT'| 'DELETE';
 type ReceivedDataType = string | number | Record<string, any> | FormData;
 
 /**
+ * Параметры конфигурации из .env
+ */
+const apiAdress = process.env.REACT_APP_API_URL;
+
+/**
  * REST запрос
  * @param restName - наименование route из api
  * @param method - тип запроса (GET, POST, PUT, DELETE)
@@ -39,7 +44,7 @@ export const fetchData = async <T = any>(restName: string, method: ReceivedMetho
     }
 
     try {
-        const response = await fetch(`${restName}${additionalLink}`, {
+        const response = await fetch(`${apiAdress}${restName}${additionalLink}`, {
             method,
             body,
             headers,
