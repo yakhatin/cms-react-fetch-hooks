@@ -1,6 +1,6 @@
 {
   "name": "@nova-cms/react-fetch-hooks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "/dist/index.js",
   "source": "src/index.ts",
@@ -12,7 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node scripts/rollup/writeCjsEntryFile.js && npm run build:modern",
     "build:modern": "rollup -c ./scripts/rollup/rollup.config.js",
-    "release": "npm run build"
+    "release": "npm run build",
+    "prepare" : "npm run build"
   },
   "author": "",
   "license": "ISC",
