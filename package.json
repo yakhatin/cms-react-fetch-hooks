@@ -11,7 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node scripts/rollup/writeCjsEntryFile.js && npm run build:modern",
-    "build:modern": "rollup -c ./scripts/rollup/rollup.config.js"
+    "build:modern": "rollup -c ./scripts/rollup/rollup.config.js",
+    "release": "npm run build"
   },
   "author": "",
   "license": "ISC",
