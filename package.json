@@ -1,5 +1,5 @@
 {
-  "name": "react-fetch-hooks",
+  "name": "@nova-cms/react-fetch-hooks",
   "version": "0.0.1",
   "description": "",
   "main": "/dist/index.js",
@@ -49,5 +49,13 @@
       "path": "./dist/index.cjs.production.min.js",
       "maxSize": "9.5 kB"
     }
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yakhatin/cms-react-fetch-hooks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yakhatin/cms-react-fetch-hooks/issues"
+  },
+  "homepage": "https://github.com/yakhatin/cms-react-fetch-hooks#readme"
 }
