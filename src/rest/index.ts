@@ -39,7 +39,7 @@ export const fetchData = async <T = any>(restName: string, method: ReceivedMetho
     }
 
     try {
-        const response = await fetch(`${apiAdress}${restName}${additionalLink}`, {
+        const response = await fetch(`${restName}${additionalLink}`, {
             method,
             body,
             headers,
