@@ -7,7 +7,6 @@ interface StateEntityInterface<T> {
     loading: boolean;
     setters: {
         setData: (v: T) => void;
-        setFetched: (v: boolean) => void;
         setLoading: (v: boolean) => void;
     };
 }

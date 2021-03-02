@@ -7,9 +7,9 @@ import { CatalogInterface } from '../types/catalog';
 import { fetchDataContextStorageDefaultValues } from './default-values';
 import { AdditionalStateInterface, FetchDataContextStorageInterface } from './types';
 
-export const FetchDataContextStorage = React.createContext<FetchDataContextStorageInterface>(fetchDataContextStorageDefaultValues);
+export const FetchDataContext = React.createContext<FetchDataContextStorageInterface>(fetchDataContextStorageDefaultValues);
 
-export const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<any>): React.ReactElement => {
+export const FetchDataContextWrapper = ({ children }: PropsWithChildren<any>): React.ReactElement => {
     const [catalogs, setCatalogs] = useState<CatalogInterface[]>([]);
     const [catalogsLoading, setCatalogsLoading] = useState(false);
     const [catalogsFetched, setCatalogsFetched] = useState(false);
@@ -22,6 +22,7 @@ export const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<a
     const setDataOfAdditionalState = <T,>(key: string, data: T) => {
         const nextState = produce(additionalState, (draft: AdditionalStateInterface<T>) => {
             draft[key].data = data;
+            draft[key].fetched = true;
         });
 
         setAdditionalState(nextState);
@@ -35,12 +36,23 @@ export const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<a
         setAdditionalState(nextState);
     };
 
+    const setAppConfigData = (v?: AppConfigInterface) => {
+        setAppConfigFetched(true);
+        setAppConfig(v);
+    };
+
+    const setCatalogsData = (v: CatalogInterface[]) => {
+        setCatalogsFetched(true);
+        setCatalogs(v);
+    };
+
     const createAdditionalState = <T,>(key: string, defaultValue: T) => {
         if (typeof additionalState[key] === 'undefined') {
             const nextState = produce(additionalState, (draft: AdditionalStateInterface<T>) => {
                 draft[key] = {
                     data: defaultValue,
-                    loading: true,
+                    fetched: false,
+                    loading: false,
                     setters: {
                         setData: (v: T) => setDataOfAdditionalState<T>(key, v),
                         setLoading: (v: boolean) => setLoadingOfAdditionalState<T>(key, v),
@@ -60,8 +72,7 @@ export const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<a
                 fetched: catalogsFetched,
                 loading: catalogsLoading,
                 setters: {
-                    setData: setCatalogs,
-                    setFetched: setCatalogsFetched,
+                    setData: setCatalogsData,
                     setLoading: setCatalogsLoading,
                 },
             },
@@ -70,8 +81,7 @@ export const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<a
                 fetched: appConfigFetched,
                 loading: appConfigLoading,
                 setters: {
-                    setData: setAppConfig,
-                    setFetched: setAppConfigFetched,
+                    setData: setAppConfigData,
                     setLoading: setAppConfigLoading,
                 },
             },
@@ -80,8 +90,8 @@ export const FetchDataContextStorageWrapper = ({ children }: PropsWithChildren<a
     };
 
     return (
-        <FetchDataContextStorage.Provider value={contextValue}>
+        <FetchDataContext.Provider value={contextValue}>
             {children}
-        </FetchDataContextStorage.Provider>
+        </FetchDataContext.Provider>
     );
 };

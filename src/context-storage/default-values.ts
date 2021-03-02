@@ -11,7 +11,6 @@ export const fetchDataContextStorageDefaultValues: FetchDataContextStorageInterf
             loading: false,
             setters: {
                 setData: defaultFunction,
-                setFetched: defaultFunction,
                 setLoading: defaultFunction,
             },
         },
@@ -21,7 +20,6 @@ export const fetchDataContextStorageDefaultValues: FetchDataContextStorageInterf
             loading: false,
             setters: {
                 setData: defaultFunction,
-                setFetched: defaultFunction,
                 setLoading: defaultFunction,
             },
         },
