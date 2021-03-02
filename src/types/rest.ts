@@ -18,6 +18,7 @@ export interface FetchBodyInterface {
     }[];
     page?: number;
     limit?: number;
+    [key: string]: any;
 }
 
 export type ReceivedMethodType = 'GET' | 'POST' | 'PUT'| 'DELETE';
