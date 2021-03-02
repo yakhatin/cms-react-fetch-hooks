@@ -1,5 +1,5 @@
 import { CatalogInterface } from '../types/catalog';
-import useFetch from './useFetch';
+import { useFetch } from './useFetch';
 import { useFetchContext } from './useFetchContext';
 
 export const useCatalogs = (body?: any) => useFetch<CatalogInterface[]>({

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchData } from '../rest';
 import { UseFetchInterface, UseFetchParams } from '../types/use-fetch';
 
-const defaultHook = <T = any>(params: UseFetchParams<T>): UseFetchInterface<T> => {
+export const useFetch = <T = any>(params: UseFetchParams<T>): UseFetchInterface<T> => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<T>(params.defaultValue);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -32,5 +32,3 @@ const defaultHook = <T = any>(params: UseFetchParams<T>): UseFetchInterface<T> =
         loading,
     };
 };
-
-export default defaultHook;
