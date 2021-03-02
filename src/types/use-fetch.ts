@@ -1,16 +1,16 @@
-import { ReceivedMethodType } from '../rest';
+import { ReceivedDataType, ReceivedMethodType } from './rest';
 
 export interface UseFetchParams<T> {
-  defaultValue: T;
-  rest: {
-    name: string;
-    method: ReceivedMethodType;
-    body?: Record<string, any>;
-  };
+    defaultValue: T;
+    rest: {
+        name: string;
+        method: ReceivedMethodType;
+        body?: ReceivedDataType;
+    };
 }
 
 export interface UseFetchParamsWithContext<T> extends UseFetchParams<T> {
-  key: string;
+    key: string;
 }
 
 export interface UseFetchInterface<T> {

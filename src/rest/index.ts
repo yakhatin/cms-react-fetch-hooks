@@ -1,12 +1,4 @@
-interface FetchDataResponse<T> {
-    success: boolean;
-    data: T | null;
-    message: string;
-    totalCount?: number | null;
-}
-
-export type ReceivedMethodType = 'GET' | 'POST' | 'PUT'| 'DELETE';
-type ReceivedDataType = string | number | Record<string, any> | FormData;
+import { FetchDataResponse, ReceivedDataType, ReceivedMethodType } from '../types/rest';
 
 /**
  * Параметры конфигурации из .env
