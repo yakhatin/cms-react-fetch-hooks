@@ -12,7 +12,7 @@ export const useCatalogs = (body?: ReceivedDataType) => useFetch<CatalogInterfac
     },
 });
 
-export const useCatalogsWithContext = (body?: ReceivedDataType) => useFetchContext<CatalogInterface[]>({
+export const useCatalogsWithContext = (fetch = false, body?: ReceivedDataType) => useFetchContext<CatalogInterface[]>(fetch, {
     defaultValue: [],
     rest: {
         name: 'catalogs/list',

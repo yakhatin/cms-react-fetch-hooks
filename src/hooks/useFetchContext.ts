@@ -3,7 +3,7 @@ import { FetchDataContext } from '../context-storage';
 import { fetchData } from '../rest';
 import { UseFetchInterface, UseFetchParamsWithContext } from '../types/use-fetch';
 
-export const useFetchContext = <T = any>(params: UseFetchParamsWithContext<T>): UseFetchInterface<T> => {
+export const useFetchContext = <T = any>(fetch = false, params: UseFetchParamsWithContext<T>): UseFetchInterface<T> => {
     const context = useContext(FetchDataContext);
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -27,12 +27,14 @@ export const useFetchContext = <T = any>(params: UseFetchParamsWithContext<T>): 
     };
 
     useEffect(() => {
-        if (stateReady && context.state[params.key].fetched === false) {
-            getData();
+        if (stateReady) {
+            if (fetch && context.state[params.key].fetched === false) {
+                getData();
+            }
         } else {
             context.createAdditionalState(params.key, params.defaultValue);
         }
-    }, [stateReady]);
+    }, [stateReady, fetch]);
 
     return {
         data: context && context.state[params.key] ? context.state[params.key].data : params.defaultValue,

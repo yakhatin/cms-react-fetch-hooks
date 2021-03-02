@@ -1,7 +1,7 @@
 import { AppConfigInterface } from '../types/app-config';
 import { useFetchContext } from './useFetchContext';
 
-export const useAppConfig = () => useFetchContext<AppConfigInterface | undefined>({
+export const useAppConfig = (fetch = false) => useFetchContext<AppConfigInterface | undefined>(fetch, {
     defaultValue: undefined,
     rest: {
         name: 'config',
