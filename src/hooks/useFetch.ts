@@ -23,7 +23,7 @@ export const useFetch = <T = any>(params: UseFetchParams<T>): UseFetchInterface<
 
     useEffect(() => {
         getData();
-    }, [params.rest]);
+    }, []);
 
     return {
         data,
