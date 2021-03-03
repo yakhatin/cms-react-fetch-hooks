@@ -1,7 +1,7 @@
 import { AppConfigInterface } from '../types/app-config';
 import { CatalogInterface } from '../types/catalog';
 
-interface StateEntityInterface<T> {
+export interface StateEntityInterface<T> {
     data: T;
     fetched: boolean;
     loading: boolean;

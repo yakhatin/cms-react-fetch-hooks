@@ -1,11 +1,38 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/comma-dangle */
-import React, { useState, PropsWithChildren } from 'react';
+import React, { useState, PropsWithChildren, useReducer } from 'react';
 import { produce } from 'immer';
 import { AppConfigInterface } from '../types/app-config';
 import { CatalogInterface } from '../types/catalog';
 import { fetchDataContextStorageDefaultValues } from './default-values';
-import { AdditionalStateInterface, FetchDataContextStorageInterface } from './types';
+import { AdditionalStateInterface, FetchDataContextStorageInterface, StateEntityInterface } from './types';
+
+interface Action {
+    value: any | boolean | StateEntityInterface<any>;
+    key: string;
+    type: 'create' | 'setData' | 'setLoading';
+}
+
+const additionalStateReducer = (state: AdditionalStateInterface, action: Action) => {
+    switch (action.type) {
+    case 'create':
+        return produce(state, (draft: AdditionalStateInterface) => {
+            if (action.value && typeof action.value === 'object') {
+                draft[action.key] = action.value;
+            }
+        });
+    case 'setData':
+        return produce(state, (draft: AdditionalStateInterface) => {
+            draft[action.key].data = action.value;
+            draft[action.key].fetched = true;
+        });
+    case 'setLoading':
+        return produce(state, (draft: AdditionalStateInterface) => {
+            draft[action.key].loading = action.value;
+        });
+    default: return state;
+    }
+};
 
 export const FetchDataContext = React.createContext<FetchDataContextStorageInterface>(fetchDataContextStorageDefaultValues);
 
@@ -17,24 +44,11 @@ export const FetchDataContextWrapper = ({ children }: PropsWithChildren<any>): R
     const [appConfigLoading, setAppConfigLoading] = useState(false);
     const [appConfigFetched, setAppConfigFetched] = useState(false);
 
-    const [additionalState, setAdditionalState] = useState<AdditionalStateInterface>({});
+    const [additionalState, additionalDispatch] = useReducer<React.Reducer<AdditionalStateInterface, Action>>(additionalStateReducer, {});
 
-    const setDataOfAdditionalState = <T,>(key: string, data: T) => {
-        const nextState = produce(additionalState, (draft: AdditionalStateInterface<T>) => {
-            draft[key].data = data;
-            draft[key].fetched = true;
-        });
+    const setDataOfAdditionalState = <T,>(key: string, value: T) => additionalDispatch({ type: 'setData', key, value });
 
-        setAdditionalState(nextState);
-    };
-
-    const setLoadingOfAdditionalState = <T,>(key: string, value: boolean) => {
-        const nextState = produce(additionalState, (draft: AdditionalStateInterface<T>) => {
-            draft[key].loading = value;
-        });
-
-        setAdditionalState(nextState);
-    };
+    const setLoadingOfAdditionalState = (key: string, value: boolean) => additionalDispatch({ key, type: 'setLoading', value });
 
     const setAppConfigData = (v?: AppConfigInterface) => {
         setAppConfigFetched(true);
@@ -48,19 +62,17 @@ export const FetchDataContextWrapper = ({ children }: PropsWithChildren<any>): R
 
     const createAdditionalState = <T,>(key: string, defaultValue: T) => {
         if (typeof additionalState[key] === 'undefined') {
-            const nextState = produce(additionalState, (draft: AdditionalStateInterface<T>) => {
-                draft[key] = {
-                    data: defaultValue,
-                    fetched: false,
-                    loading: false,
-                    setters: {
-                        setData: (v: T) => setDataOfAdditionalState<T>(key, v),
-                        setLoading: (v: boolean) => setLoadingOfAdditionalState<T>(key, v),
-                    },
-                };
-            });
+            const value = {
+                data: defaultValue,
+                fetched: false,
+                loading: false,
+                setters: {
+                    setData: (v: T) => setDataOfAdditionalState<T>(key, v),
+                    setLoading: (v: boolean) => setLoadingOfAdditionalState(key, v),
+                },
+            };
 
-            setAdditionalState(nextState);
+            additionalDispatch({ key, type: 'create', value });
         }
     };
 
