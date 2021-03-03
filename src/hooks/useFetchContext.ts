@@ -32,7 +32,7 @@ export const useFetchContext = <T = any>(fetch = false, params: UseFetchParamsWi
                 getData();
             }
         } else {
-            context.createAdditionalState(params.key, params.defaultValue);
+            context.createState(params.key, params.defaultValue);
         }
     }, [stateReady, fetch]);
 

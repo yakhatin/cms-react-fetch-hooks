@@ -1,7 +1,4 @@
-import { AppConfigInterface } from '../types/app-config';
-import { CatalogInterface } from '../types/catalog';
-
-export interface StateEntityInterface<T> {
+export interface ContextStateEntityInterface<T> {
     data: T;
     fetched: boolean;
     loading: boolean;
@@ -11,15 +8,11 @@ export interface StateEntityInterface<T> {
     };
 }
 
-export interface AdditionalStateInterface<T = any> {
-    [key: string]: StateEntityInterface<T>;
+export interface ContextStateInterface<T = any> {
+    [key: string]: ContextStateEntityInterface<T>;
 }
 
 export interface FetchDataContextStorageInterface {
-    createAdditionalState: <T>(key: string, defaultValue: T) => void;
-    state: {
-        catalogs: StateEntityInterface<CatalogInterface[]>;
-        appConfig: StateEntityInterface<AppConfigInterface | undefined>;
-        [key: string]: StateEntityInterface<any>;
-    };
+    createState: <T>(key: string, defaultValue: T) => void;
+    state: ContextStateInterface<any>;
 }
