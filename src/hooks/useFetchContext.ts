@@ -17,7 +17,7 @@ export const useFetchContext = <T = any>(fetch = false, params: UseFetchParamsWi
             const result = await fetchData<T>(params.rest.name, params.rest.method, params.rest.body);
 
             if (result.success && result.data) {
-                context.state[params.key].setters.setData(result.data);
+                context.state[params.key].setters.setData(result.data, result.totalCount);
             } else if (result.success === false) {
                 setErrorMessage(result.message);
             }
@@ -41,5 +41,6 @@ export const useFetchContext = <T = any>(fetch = false, params: UseFetchParamsWi
         error: errorMessage,
         refresh: getData,
         loading: context && context.state[params.key] ? context.state[params.key].loading : false,
+        totalCount: context && context.state[params.key] ? context.state[params.key].totalCount : null,
     };
 };

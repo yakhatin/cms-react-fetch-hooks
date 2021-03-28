@@ -9,7 +9,9 @@ export const FetchDataContext = React.createContext<FetchDataContextStorageInter
 export const FetchDataContextWrapper = ({ children }: PropsWithChildren<any>): React.ReactElement => {
     const [state, stateDispatch] = useReducer<React.Reducer<ContextStateInterface, Action>>(stateReducer, {});
 
-    const setDataOfAdditionalState = <T,>(key: string, value: T) => stateDispatch({ type: 'setData', key, value });
+    const setDataOfAdditionalState = <T,>(key: string, value: T, totalCount?: number | null) => stateDispatch({
+        type: 'setData', key, value, totalCount
+    });
 
     const setLoadingOfAdditionalState = (key: string, value: boolean) => stateDispatch({ key, type: 'setLoading', value });
 
@@ -20,9 +22,10 @@ export const FetchDataContextWrapper = ({ children }: PropsWithChildren<any>): R
                 fetched: false,
                 loading: false,
                 setters: {
-                    setData: (v: T) => setDataOfAdditionalState<T>(key, v),
+                    setData: (v: T, totalCount?: number | null) => setDataOfAdditionalState<T>(key, v, totalCount),
                     setLoading: (v: boolean) => setLoadingOfAdditionalState(key, v),
                 },
+                totalCount: null
             };
 
             stateDispatch({ key, type: 'create', value });

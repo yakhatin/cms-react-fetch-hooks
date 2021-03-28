@@ -18,4 +18,5 @@ export interface UseFetchInterface<T> {
     error: string | null;
     loading: boolean;
     refresh: () => void;
+    totalCount?: number | null;
 }

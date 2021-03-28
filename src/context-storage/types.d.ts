@@ -3,9 +3,10 @@ export interface ContextStateEntityInterface<T> {
     fetched: boolean;
     loading: boolean;
     setters: {
-        setData: (v: T) => void;
+        setData: (v: T, totalCount?: number | null) => void;
         setLoading: (v: boolean) => void;
     };
+    totalCount?: number | null;
 }
 
 export interface ContextStateInterface<T = any> {

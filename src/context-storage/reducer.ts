@@ -6,6 +6,7 @@ export interface Action {
     value: any | boolean | ContextStateEntityInterface<any>;
     key: string;
     type: 'create' | 'setData' | 'setLoading';
+    totalCount?: number | null;
 }
 
 export const stateReducer = (state: ContextStateInterface, action: Action) => {
@@ -20,6 +21,7 @@ export const stateReducer = (state: ContextStateInterface, action: Action) => {
         return produce(state, (draft: ContextStateInterface) => {
             draft[action.key].data = action.value;
             draft[action.key].fetched = true;
+            draft[action.key].totalCount = action.totalCount;
         });
     case 'setLoading':
         return produce(state, (draft: ContextStateInterface) => {
