@@ -1,3 +1,7 @@
+import { enableES5 } from 'immer';
+
+enableES5();
+
 export * from './context-storage';
 export * from './hooks/useFetch';
 export * from './hooks/useFetchContext';
