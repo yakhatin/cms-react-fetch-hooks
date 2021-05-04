@@ -21,3 +21,11 @@ export interface CartItemRequestInterface {
     product_ed_id: number;
     cart_item_count?: number;
 }
+
+export interface CreatedCartItemInterface {
+    product_ed_id: number;
+    cart_id: string;
+    cart_item_id: string;
+    cart_item_modified: string;
+    cart_item_date: string;
+}

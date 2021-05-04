@@ -1,5 +1,6 @@
 import { fetchData } from '../rest';
-import { CartItemInterface, CartItemRequestInterface } from '../types/cart';
+import { CartItemInterface, CartItemRequestInterface, CreatedCartItemInterface } from '../types/cart';
+import { cartIdStorageKey } from './useCart';
 
 const cartItemRestUrl = 'cart/items/';
 
@@ -7,7 +8,12 @@ const errorIdMessage = 'Неверный идентификатор эл-а ко
 
 export const useCartItem = () => {
     const addCartItem = async (data: CartItemRequestInterface) => {
-        const result = await fetchData(`${cartItemRestUrl}add`, 'POST', data);
+        const result = await fetchData<CreatedCartItemInterface>(`${cartItemRestUrl}add`, 'POST', data);
+
+        if (result.success && typeof result.data === 'object' && result.data) {
+            localStorage.setItem(cartIdStorageKey, result.data.cart_id);
+        }
+
         return result;
     };
 

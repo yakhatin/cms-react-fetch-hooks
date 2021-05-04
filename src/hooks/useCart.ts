@@ -2,16 +2,20 @@ import { useEffect, useState } from 'react';
 import { fetchData } from '../rest';
 import { CartInterface } from '../types/cart';
 
-export const useCart = (id: string) => {
+export const cartIdStorageKey = 'cart_id';
+
+export const useCart = () => {
     const [loading, setLoading] = useState(false);
     const [cartData, setCartData] = useState<CartInterface>();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const getCartData = async (x: string) => {
-        if (typeof x === 'string') {
+    const getCartData = async (x?: string) => {
+        const cartId = x || localStorage.getItem(cartIdStorageKey);
+
+        if (typeof cartId === 'string') {
             setLoading(true);
 
-            const result = await fetchData<CartInterface>(`cart/${x}`, 'GET');
+            const result = await fetchData<CartInterface>(`cart/${cartId}`, 'GET');
 
             if (result.success && result.data) {
                 setCartData(result.data);
@@ -26,8 +30,8 @@ export const useCart = (id: string) => {
     };
 
     useEffect(() => {
-        getCartData(id);
-    }, [id]);
+        getCartData();
+    }, []);
 
     return {
         data: cartData,
