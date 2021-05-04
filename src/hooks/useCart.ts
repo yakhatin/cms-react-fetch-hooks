@@ -6,7 +6,7 @@ export const cartIdStorageKey = 'cart_id';
 
 export const useCart = () => {
     const [loading, setLoading] = useState(false);
-    const [cartData, setCartData] = useState<CartInterface>();
+    const [cartData, setCartData] = useState<CartInterface|undefined>(undefined);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const getCartData = async (x?: string) => {
@@ -15,12 +15,14 @@ export const useCart = () => {
         if (typeof cartId === 'string') {
             setLoading(true);
 
-            const result = await fetchData<CartInterface>(`cart/${cartId}`, 'GET');
+            const result = await fetchData<CartInterface[]>(`cart/${cartId}`, 'GET');
 
-            if (result.success && result.data) {
-                setCartData(result.data);
+            if (result.success && Array.isArray(result.data) && result.data.length > 0) {
+                const [data] = result.data;
+                setCartData(data);
             } else if (result.success === false) {
                 setErrorMessage(result.message);
+                setCartData(undefined);
             }
 
             setLoading(false);
