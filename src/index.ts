@@ -10,3 +10,4 @@ export * from './hooks/useCatalogs';
 export * from './hooks/useVisitorCounters';
 export * from './hooks/useCart';
 export * from './hooks/useCartItem';
+export * from './hooks/useOrder';
