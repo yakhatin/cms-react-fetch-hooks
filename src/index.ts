@@ -8,3 +8,5 @@ export * from './hooks/useFetchContext';
 export * from './hooks/useAppConfig';
 export * from './hooks/useCatalogs';
 export * from './hooks/useVisitorCounters';
+export * from './hooks/useCart';
+export * from './hooks/useCartItem';

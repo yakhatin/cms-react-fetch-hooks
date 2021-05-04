@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchData } from '../rest';
 import { CartInterface } from '../types/cart';
 
-const useCart = (id: string) => {
+export const useCart = (id: string) => {
     const [loading, setLoading] = useState(false);
     const [cartData, setCartData] = useState<CartInterface>();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -36,5 +36,3 @@ const useCart = (id: string) => {
         loading,
     };
 };
-
-export default useCart;

@@ -5,7 +5,7 @@ const cartItemRestUrl = 'cart/items/';
 
 const errorIdMessage = 'Неверный идентификатор эл-а корзины';
 
-const useCartItem = () => {
+export const useCartItem = () => {
     const addCartItem = async (data: CartItemRequestInterface) => {
         const result = await fetchData(`${cartItemRestUrl}/add`, 'POST', data);
         return result;
@@ -54,5 +54,3 @@ const useCartItem = () => {
         update: updateCartItemData,
     };
 };
-
-export default useCartItem;
