@@ -22,6 +22,7 @@ export const useOrder = () => {
 
         if (result.success) {
             setData(result.data);
+            localStorage.removeItem(cartIdStorageKey);
         } else {
             setErrorMessage(result.message);
         }

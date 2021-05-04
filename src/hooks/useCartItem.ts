@@ -11,7 +11,9 @@ export const useCartItem = () => {
         const result = await fetchData<CreatedCartItemInterface>(`${cartItemRestUrl}add`, 'POST', data);
 
         if (result.success && typeof result.data === 'object' && result.data) {
-            localStorage.setItem(cartIdStorageKey, result.data.cart_id);
+            if (localStorage.getItem(cartIdStorageKey) === null) {
+                localStorage.setItem(cartIdStorageKey, result.data.cart_id);
+            }
         }
 
         return result;
