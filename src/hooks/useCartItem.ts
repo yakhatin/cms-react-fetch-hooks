@@ -8,10 +8,20 @@ const errorIdMessage = 'Неверный идентификатор эл-а ко
 
 export const useCartItem = () => {
     const addCartItem = async (data: CartItemRequestInterface) => {
-        const result = await fetchData<CreatedCartItemInterface>(`${cartItemRestUrl}add`, 'POST', data);
+        const body: CartItemRequestInterface = {
+            ...data,
+        };
+
+        const cartId = localStorage.getItem(cartIdStorageKey);
+
+        if (typeof cartId === 'string') {
+            body.cart_id = cartId;
+        }
+
+        const result = await fetchData<CreatedCartItemInterface>(`${cartItemRestUrl}add`, 'POST', body);
 
         if (result.success && typeof result.data === 'object' && result.data) {
-            if (localStorage.getItem(cartIdStorageKey) === null) {
+            if (cartId === null) {
                 localStorage.setItem(cartIdStorageKey, result.data.cart_id);
             }
         }
