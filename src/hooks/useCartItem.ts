@@ -7,7 +7,7 @@ const errorIdMessage = 'Неверный идентификатор эл-а ко
 
 export const useCartItem = () => {
     const addCartItem = async (data: CartItemRequestInterface) => {
-        const result = await fetchData(`${cartItemRestUrl}/add`, 'POST', data);
+        const result = await fetchData(`${cartItemRestUrl}add`, 'POST', data);
         return result;
     };
 
