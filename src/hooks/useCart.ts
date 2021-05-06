@@ -27,7 +27,7 @@ export const useCart = () => {
 
             setLoading(false);
         } else {
-            setErrorMessage('Неверный идентификатор корзины');
+            setCartData(undefined);
         }
     };
 
