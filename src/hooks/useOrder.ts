@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { fetchData } from '../rest';
-import { OrderClientDataRequestInterface, OrderRequestInterface } from '../types/order';
+import { OrderClientDataRequestInterface, OrderDataInterface, OrderRequestInterface } from '../types/order';
 import { cartIdStorageKey } from './useCart';
 
 export const useOrder = () => {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [data, setData] = useState();
+    const [data, setData] = useState<OrderDataInterface | undefined>(undefined);
 
     const makeOrder = async (x: OrderClientDataRequestInterface) => {
         setLoading(true);
@@ -18,10 +18,13 @@ export const useOrder = () => {
             cart_id: cartId,
         };
 
-        const result = await fetchData('order', 'POST', body);
+        const result = await fetchData<OrderDataInterface>('order', 'POST', body);
 
         if (result.success) {
-            setData(result.data);
+            if (result.data) {
+                setData(result.data);
+            }
+
             localStorage.removeItem(cartIdStorageKey);
         } else {
             setErrorMessage(result.message);
