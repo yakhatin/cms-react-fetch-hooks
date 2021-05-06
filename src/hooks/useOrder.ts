@@ -18,7 +18,7 @@ export const useOrder = () => {
             cart_id: cartId,
         };
 
-        const result = await fetchData('/order', 'POST', body);
+        const result = await fetchData('order', 'POST', body);
 
         if (result.success) {
             setData(result.data);
@@ -28,6 +28,8 @@ export const useOrder = () => {
         }
 
         setLoading(false);
+
+        return result;
     };
 
     return {
