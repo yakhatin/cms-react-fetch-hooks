@@ -6,4 +6,5 @@ export interface AppConfigInterface {
     contacts_instagram: string | null;
     contacts_wa: string | null;
     contacts_city: string | null;
+    contacts_address: string | null;
 }
