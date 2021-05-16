@@ -33,18 +33,20 @@ export const useVisitorCounters = () => {
     };
 
     useEffect(() => {
-        if (config && typeof config === 'object' && typeof config.config_id === 'number' && typeof config.ym_counterID === 'string') {
-            const ymID = config.ym_counterID;
+        if (config && typeof config === 'object') {
+            if (typeof config.config_id === 'number' && typeof config.ym_counterID === 'string') {
+                const ymID = config.ym_counterID;
 
-            // @ts-ignore
-            ym(ymID, 'init', { triggerEvent: true });
-
-            document.addEventListener(`yacounter${ymID}inited`, () => {
                 // @ts-ignore
-                ym(ymID, 'getClientID', sendVisitorData);
-            });
-        } else {
-            sendVisitorData(null);
+                ym(ymID, 'init', { triggerEvent: true });
+
+                document.addEventListener(`yacounter${ymID}inited`, () => {
+                // @ts-ignore
+                    ym(ymID, 'getClientID', sendVisitorData);
+                });
+            } else {
+                sendVisitorData(null);
+            }
         }
     }, [config]);
 };
