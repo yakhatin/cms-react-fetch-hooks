@@ -20,6 +20,7 @@ export interface CartItemRequestInterface {
     cart_id?: string;
     product_ed_id: number;
     cart_item_count?: number;
+    visitor_id?: string | null;
 }
 
 export interface CreatedCartItemInterface {

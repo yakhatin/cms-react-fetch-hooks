@@ -2,19 +2,34 @@ import { useEffect } from 'react';
 import { useAppConfig } from './useAppConfig';
 import { fetchData } from '../rest';
 import '../yandex-metrica';
+import { InitVisitorRequest, Visitor } from '../types/visitor';
+
+export const visitorIdStorageKey = 'visitor_id';
+export const lastVisitDateStorageKey = 'last_visit';
 
 export const useVisitorCounters = () => {
     const { data: config } = useAppConfig();
 
-    const sendVisitorData = (ymUID: string | null) => {
+    const sendVisitorData = async (ymUID: string | null) => {
         const { referrer } = document;
-        const data = {
+        const data: InitVisitorRequest = {
             referrer: referrer.length > 0 ? referrer : null,
             ym_clientID: ymUID,
             clientUrl: document.URL,
+            visitor_id: localStorage.getItem(visitorIdStorageKey),
+            last_visit: localStorage.getItem(lastVisitDateStorageKey),
         };
 
-        fetchData('visitor', 'POST', data);
+        const result = await fetchData<Visitor>('visitor', 'POST', data);
+
+        if (result.success) {
+            if (result.data && typeof result.data === 'object') {
+                localStorage.setItem(visitorIdStorageKey, result.data.visitor_id);
+                localStorage.setItem(lastVisitDateStorageKey, result.data.last_visit);
+            }
+        } else {
+            console.error(result.message);
+        }
     };
 
     useEffect(() => {

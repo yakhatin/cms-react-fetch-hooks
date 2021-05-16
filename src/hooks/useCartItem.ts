@@ -1,6 +1,7 @@
 import { fetchData } from '../rest';
 import { CartItemInterface, CartItemRequestInterface, CreatedCartItemInterface } from '../types/cart';
 import { cartIdStorageKey } from './useCart';
+import { visitorIdStorageKey } from './useVisitorCounters';
 
 const cartItemRestUrl = 'cart/items/';
 
@@ -10,6 +11,7 @@ export const useCartItem = () => {
     const addCartItem = async (data: CartItemRequestInterface) => {
         const body: CartItemRequestInterface = {
             ...data,
+            visitor_id: localStorage.getItem(visitorIdStorageKey),
         };
 
         const cartId = localStorage.getItem(cartIdStorageKey);

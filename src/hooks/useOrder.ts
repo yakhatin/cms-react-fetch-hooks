@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { fetchData } from '../rest';
 import { OrderClientDataRequestInterface, OrderDataInterface, OrderRequestInterface } from '../types/order';
 import { cartIdStorageKey } from './useCart';
+import { visitorIdStorageKey } from './useVisitorCounters';
 
 export const useOrder = () => {
     const [loading, setLoading] = useState(false);
@@ -11,11 +12,10 @@ export const useOrder = () => {
     const makeOrder = async (x: OrderClientDataRequestInterface) => {
         setLoading(true);
 
-        const cartId = localStorage.getItem(cartIdStorageKey) || undefined;
-
         const body: OrderRequestInterface = {
             ...x,
-            cart_id: cartId,
+            cart_id: localStorage.getItem(cartIdStorageKey),
+            visitor_id: localStorage.getItem(visitorIdStorageKey),
         };
 
         const result = await fetchData<OrderDataInterface>('order', 'POST', body);

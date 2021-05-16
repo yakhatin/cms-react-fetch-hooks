@@ -6,8 +6,8 @@ export interface OrderClientDataRequestInterface {
 }
 
 export interface OrderRequestInterface extends OrderClientDataRequestInterface {
-    cart_id?: string;
-    visit_id?: number;
+    cart_id?: string | null;
+    visitor_id?: string | null;
 }
 
 export interface OrderDataInterface {
