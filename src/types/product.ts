@@ -17,6 +17,8 @@ export interface ProductInterface {
     product_description: string | null;
     product_is_stock: number;
     product_price: number | null;
+    product_price_prefix: string | null;
+    product_price_suffix: string | null;
     product_discount_price: number | null;
     product_count: number | null;
     characteristics: ProductCharacteristicInterface[];
