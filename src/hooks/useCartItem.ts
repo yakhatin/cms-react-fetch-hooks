@@ -23,7 +23,7 @@ export const useCartItem = () => {
         const result = await fetchData<CreatedCartItemInterface>(`${cartItemRestUrl}add`, 'POST', body);
 
         if (result.success && typeof result.data === 'object' && result.data) {
-            if (cartId === null) {
+            if (cartId !== result.data.cart_id) {
                 localStorage.setItem(cartIdStorageKey, result.data.cart_id);
             }
         }

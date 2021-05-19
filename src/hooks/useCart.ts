@@ -15,10 +15,10 @@ export const useCart = () => {
         if (typeof cartId === 'string') {
             setLoading(true);
 
-            const result = await fetchData<CartInterface[]>(`cart/${cartId}`, 'GET');
+            const result = await fetchData<CartInterface>(`cart/${cartId}`, 'GET');
 
-            if (result.success && Array.isArray(result.data) && result.data.length > 0) {
-                const [data] = result.data;
+            if (result.success && result.data && typeof result.data === 'object') {
+                const { data } = result;
                 setCartData(data);
             } else if (result.success === false) {
                 setErrorMessage(result.message);
