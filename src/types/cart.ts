@@ -4,6 +4,8 @@ export interface CartItemInterface {
     product_ed_id: number;
     product_title: string;
     product_price: number | null;
+    product_price_prefix: string | null;
+    product_price_suffix: string | null;
     characteristics: Record<string, string | number>[];
     product_discount_price?: number | null;
     cart_item_count: number;
