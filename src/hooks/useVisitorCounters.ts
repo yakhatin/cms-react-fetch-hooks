@@ -38,7 +38,7 @@ export const useVisitorCounters = () => {
                 const ymID = config.ym_counterID;
 
                 // @ts-ignore
-                ym(ymID, 'init', { triggerEvent: true });
+                ym(ymID, 'init', { triggerEvent: true, clickmap: true, webvisor: true });
 
                 document.addEventListener(`yacounter${ymID}inited`, () => {
                 // @ts-ignore
