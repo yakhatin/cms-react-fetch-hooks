@@ -4,8 +4,25 @@ import { fetchData } from '../rest';
 import '../yandex-metrica';
 import { InitVisitorRequest, Visitor } from '../types/visitor';
 
+declare let ym: Function;
+
 export const visitorIdStorageKey = 'visitor_id';
 export const lastVisitDateStorageKey = 'last_visit';
+
+export const useYandexMetrika = () => {
+    const { data: appConfig } = useAppConfig();
+
+    const metrika = (...args: any[]) => {
+        if (ym && typeof ym === 'function' && (typeof appConfig?.ym_counterID === 'number' || typeof appConfig?.ym_counterID === 'string')) {
+            const ymId = typeof appConfig.ym_counterID === 'string' ? parseInt(appConfig.ym_counterID, 10) : appConfig.ym_counterID;
+            ym(ymId, ...args);
+        }
+    };
+
+    return {
+        metrika,
+    };
+};
 
 export const useVisitorCounters = () => {
     const { data: config } = useAppConfig();
@@ -37,16 +54,20 @@ export const useVisitorCounters = () => {
             if (typeof config.config_id === 'number' && typeof config.ym_counterID === 'string') {
                 const ymID = config.ym_counterID;
 
-                // @ts-ignore
-                ym(ymID, 'init', { triggerEvent: true, clickmap: true, webvisor: true });
+                ym(ymID, 'init', {
+                    triggerEvent: true,
+                    clickmap: true,
+                    webvisor: true,
+                    trackLinks: true,
+                    trackHash: true,
+                });
 
                 document.addEventListener(`yacounter${ymID}inited`, () => {
-                // @ts-ignore
                     ym(ymID, 'getClientID', sendVisitorData);
                 });
             } else {
                 sendVisitorData(null);
             }
         }
-    }, [config]);
+    }, [config?.config_id]);
 };
