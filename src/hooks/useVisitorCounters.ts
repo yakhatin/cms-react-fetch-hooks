@@ -55,6 +55,7 @@ export const useVisitorCounters = () => {
                 const ymID = config.ym_counterID;
 
                 ym(ymID, 'init', {
+                    defer: true,
                     triggerEvent: true,
                     clickmap: true,
                     webvisor: true,
